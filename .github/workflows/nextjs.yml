@@ -16,10 +16,10 @@ jobs:
           node-version: 18.17.0
 
       - name: Install Dependencies
-        run: npm install
+        run: yarn install
 
       - name: Build and Export
-        run: npm run build
+        run: yarn build
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
