@@ -3,10 +3,7 @@
  */
 const nextConfig = {
   output: 'export',
-  assetPrefix: './',
-  distDir: 'docs/',
-  trailingSlash: true,
-  skipTrailingSlashRedirect: true,
+  assetPrefix: './',  
   images: {
     unoptimized: true,
   },
