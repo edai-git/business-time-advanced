@@ -1,0 +1,197 @@
+## Setting Business Times
+
+> dayjs = instanceof Dayjs
+``` typescript 
+/**
+ * @param 1 business template. type : BusinessHoursMap 
+ * @param 2 type (add|replace) default 'replace'. type : string
+ * add : will change working days as specified
+ * replace : will replace all working days as specified (if the day does not exist it will be set as 'null')
+*/
+const param1 : BusinesHoursMap = {
+    sunday?:[{start : "HH:mm:ss", end: "HH:mm:ss"}] | null,
+    ...
+};
+const param2 : string = 'replace';
+
+// Set Business Times in dayjs
+dayjs.setBusinessTime(param1, param2);
+
+```
+
+**[See more...](#type--add)**
+
+### Default Working Hours
+
+#### Monday-Friday 9am - 5pm
+> By default, Business Times are Monday-Friday, 9am - 5pm, but you can setup as many Business Segments you want in a day. 
+> (Jika tidak mengatur jam kerja, maka secara default akan menggunakan jam kerja senin-jumat 09:00-17:00)
+````typescript copy
+// Create your Business Week definition
+const businessTimes: BusinessHoursMap = {
+    monday: [{ start: '09:00:00', end: '17:00:00' }],
+    tuesday: [{ start: '09:00:00', end: '17:00:00' }],
+    wednesday: [{ start: '09:00:00', end: '17:00:00' }],
+    thursday: [{ start: '09:00:00', end: '17:00:00' }],
+    friday: [{ start: '09:00:00', end: '17:00:00' }],
+    saturday: null,
+    sunday: null,
+}
+
+// Set Business Times in dayjs
+dayjs.setBusinessTime(businessTimes);
+````
+
+#### Always Open
+> There is no closing time during the week. 
+> (24 jam sehari selama seminggu, tidak ada hari libur kecuali **exceptions** atau **holidays** sudah diatur)
+
+````typescript copy
+// Create your Business Week definition
+const businessTimes: BusinessHoursMap = {
+    monday: [{ start: '00:00:00', end: '24:00:00' }],
+    tuesday: [{ start: '00:00:00', end: '24:00:00' }],
+    wednesday: [{ start: '00:00:00', end: '24:00:00' }],
+    thursday: [{ start: '00:00:00', end: '24:00:00' }],
+    friday: [{ start: '00:00:00', end: '24:00:00' }],
+    saturday: [{ start: '00:00:00', end: '24:00:00' }],
+    sunday: [{ start: '00:00:00', end: '24:00:00' }],
+}
+
+// Set Business Times in dayjs
+dayjs.setBusinessTime(businessTimes);
+````
+
+#### Always Close
+> only applies when 'exception' has been set. 
+> (berlaku ketika **exceptions** sudah diatur)
+
+````typescript copy
+// Set Business Times in dayjs
+dayjs.setBusinessTime({});
+
+/**
+ * @Result :
+{
+    monday: null,
+    tuesday: null,
+    wednesday: null,
+    thursday: null,
+    friday: null,
+    saturday: null,
+    sunday: null,
+}
+
+*/
+
+````
+
+### Customized Working Hours 
+
+#### Weekend template 
+>only specified working hours. 
+>(cuma kerja dihari sabtu dan minggu jam 08:00-18:00)
+
+````typescript
+// Create your Business Week definition
+const businessTimes: BusinessHoursMap = {
+  sunday: [{ start: '08:00:00', end: '12:00:00' }, { start: '14:00:00', end: '18:00:00' }],
+  saturday: [{ start: '08:00:00', end: '13:00:00' }, { start: '12:00:00', end: '18:00:00' }, { start: '20:00:00', end: '24:00:00' }], // merge overlap
+}
+
+dayjs.setBusinessTime(businessTimes);
+
+/**
+ * @Result :
+ {
+    monday: null,
+    tuesday: null,
+    wednesday: null,
+    thursday: null,
+    friday: null,
+    saturday: [{ start: '08:00:00', end: '12:00:00'}, { start: '14:00:00', end: '18:00:00'}],
+    sunday: [{ start: '08:00:00', end: '18:00:00' }, { start: '20:00:00', end: '24:00:00'}],
+ }
+ */
+````
+
+#### type : add 
+``` typescript copy
+// default working hours
+const businessTimes: BusinessHoursMap = {
+    monday: [{ start: '09:00:00', end: '17:00:00' }],
+    tuesday: [{ start: '09:00:00', end: '17:00:00' }],
+    wednesday: [{ start: '09:00:00', end: '17:00:00' }],
+    thursday: [{ start: '09:00:00', end: '17:00:00' }],
+    friday: [{ start: '09:00:00', end: '17:00:00' }],
+    saturday: null,
+    sunday: null,
+}
+
+// set default working hour
+dayjs.setBusinessTime(businessTimes);
+
+// type add 
+const newTemplate: BusinessHoursMap = {
+  sunday: [{ start: '08:00:00', end: '18:00:00' }],
+  saturday: [{ start: '08:00:00', end: '18:00:00' }],
+}
+
+// set to working hour
+dayjs.setBusinessTime(newTemplate, 'add');
+
+/**
+ * @Result
+ {
+    monday: [{ start: '09:00:00', end: '17:00:00' }],
+    tuesday: [{ start: '09:00:00', end: '17:00:00' }],
+    wednesday: [{ start: '09:00:00', end: '17:00:00' }],
+    thursday: [{ start: '09:00:00', end: '17:00:00' }],
+    friday: [{ start: '09:00:00', end: '17:00:00' }],
+    sunday: [{ start: '08:00:00', end: '18:00:00' }],
+    saturday: [{ start: '08:00:00', end: '18:00:00' }],
+}
+ */
+
+```
+
+
+#### type : replace
+``` typescript copy
+// default working hours
+const businessTimes: BusinessHoursMap = {
+    monday: [{ start: '09:00:00', end: '17:00:00' }],
+    tuesday: [{ start: '09:00:00', end: '17:00:00' }],
+    wednesday: [{ start: '09:00:00', end: '17:00:00' }],
+    thursday: [{ start: '09:00:00', end: '17:00:00' }],
+    friday: [{ start: '09:00:00', end: '17:00:00' }],
+    saturday: null,
+    sunday: null,
+}
+
+// set default working hour
+dayjs.setBusinessTime(businessTimes);
+
+// type replace 
+const newTemplate: BusinessHoursMap = {
+  sunday: [{ start: '08:00:00', end: '18:00:00' }],
+  saturday: [{ start: '08:00:00', end: '18:00:00' }],
+}
+
+// set to working hour
+dayjs.setBusinessTime(newTemplate, 'replace');
+
+/**
+ * @Result
+ {
+    monday: null,
+    tuesday: null,
+    wednesday: null,
+    thursday: null,
+    friday: null,
+    sunday: [{ start: '08:00:00', end: '18:00:00' }],
+    saturday: [{ start: '08:00:00', end: '18:00:00' }],
+}
+ */
+
+```

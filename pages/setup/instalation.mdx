@@ -1,0 +1,34 @@
+## Instalation
+
+```sh npm2yarn
+npm i dayjs-business-time-advanced
+```
+
+## Usage
+
+### CommonJS 
+````javascript copy
+// First of all, include dayjs
+const dayjs = require('dayjs');
+
+// Then, include dayjs-business-time-advanced
+const dayjsBusinessTime = require('dayjs-business-time-advanced');
+
+// Attach dayjs plugin
+dayjs.extend(dayjsBusinessTime);
+
+// Now you have all Business Time methods in dayjs
+````
+
+### ES6 Modules / typescript
+````typescript copy
+// First of all, include dayjs
+import dayjs from 'dayjs';
+
+// Then, include dayjs-business-time-advanced
+import dayjsBusinessTime from 'dayjs-business-time-advanced';
+
+// Attach dayjs plugin
+dayjs.extend(dayjsBusinessTime);
+
+// Now you have all Business Time methods in dayjs
