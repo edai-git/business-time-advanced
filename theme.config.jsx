@@ -5,7 +5,7 @@ export default {
     </>
   ),
   project: {
-    link: "https://github.com/shuding/nextra",
+    link: "https://github.com/edai-git",
   },
   search: { placeholder: "Cari dulu" },
   primaryHue: { dark: 120 },

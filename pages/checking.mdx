@@ -1,0 +1,34 @@
+## Check if a date is a Holiday
+
+According to [holidays setup](setup/holiday#setting-holidays)
+````typescript
+const isHoliday = dayjs('2024-01-01').isHoliday();
+
+console.log(isHoliday); // true
+````
+
+## Check if a date is a Exception date
+
+According to [exceptions setup](setup/exception#setting-exceptions)
+````typescript
+const isException = dayjs('2024-01-01').isException();
+
+console.log(isException); // true
+````
+
+## Check if a date is a Business Day
+
+Bussiness Days are [days with Business Hours settled](setup/business-time#setting-business-times), excluding Holidays.
+````typescript
+const isBusinessDay = dayjs('2024-01-01').isBusinessDay();
+
+console.log(isBusinessDay); // false
+````
+
+## Check if a Time is Business Time
+Bussiness Times are all minutes between Start and End of a Business Time Segment.
+````typescript
+const isBusinessTime = dayjs('2024-01-02 10:00:00').isBusinessTime();
+
+console.log(isBusinessTime); // true
+````

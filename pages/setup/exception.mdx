@@ -1,1 +1,114 @@
-# exce
+# Exceptions
+
+## Setting Exceptions
+> By default, exceptions are empty!
+
+* **If working hours = [] or null. then the date will be included in the holidays**
+* **[See Regulation](business-time#regulations)**
+
+````typescript copy
+// Create your holidays array as string array
+const exceptions : BusinessTimeExceptions = {
+    '2024-01-01' : [{start: '07:00:00', end:'06:00:00'}, {start: '08:00:00', end:'28:00:00'}],
+    '2024-01-02' : [{start: '08:00:00', end:'25:00:00'}, {start: '06:00:00', end:'22:00:00'}],
+    '2024-01-03' : [{start: '13:00:00', end:'25:00:00'}, {start: '06:00:00', end:'07:00:00'}],
+    '2024-01-05' : null,
+    '2024-01-04' : [],
+    '2024-01-08' : [{start: '28:00:00', end:'25:00:00'}, {start: '26:00:00', end:'31:00:00'}],
+};
+
+// Add exceptions to dayjs
+dayjs.setExceptions(exceptions)
+````
+
+## Getting Holidays
+### Get All Exceptions
+> [Set a Exception date first](#setting-exceptions)
+````typescript copy
+  
+const exceptions = dayjs.getExceptions();
+
+console.log(exceptions);
+/**
+ * @Result
+ 
+ {
+  '2024-01-01': [ { start: '08:00:00', end: '24:00:00' } ],
+  '2024-01-02': [ { start: '06:00:00', end: '24:00:00' } ],
+  '2024-01-03': [
+    { start: '06:00:00', end: '07:00:00' },
+    { start: '13:00:00', end: '24:00:00' }
+  ]
+ }
+
+ */
+
+````
+### Get Exceptions by date
+> [Set a Exception date first](#setting-exceptions)
+````typescript copy
+const exeption = dayjs.getExceptionByDate('2024-01-03');
+
+console.log(exception);
+/**
+ * @Result
+ 
+ [
+  { start: '06:00:00', end: '07:00:00' },
+  { start: '13:00:00', end: '24:00:00' }
+ ]
+
+ */
+
+````
+
+* **[Get Template](business-time#template)**
+* **[Get Holidays](holiday#getting-holidays)**
+
+## Example
+``` typescript copy
+   // set always close
+    dayjs.setBusinessTime({});
+
+    // set exceptions
+    const exceptions : BusinessTimeExceptions = {
+        '2024-01-01' : [{start: "08:00:00", end:"12:00:00"}],
+        '2024-02-01' : [{start: "08:00:00", end:"12:00:00"}],
+        '2024-03-01' : [{start: "08:00:00", end:"12:00:00"}],
+    };
+    dayjs.setExceptions(exceptions);
+
+    // diff
+    console.log("diff in business time : ", dayjs("2024-01-01 10:00:00").businessHoursDiff(dayjs("2024-01-31 12:00:00"))); // out : 2 hours
+
+    // add
+    console.log("add business time : ", dayjs("2024-01-01 10:00:00").addBusinessHours(5).format("YYYY-MM-DD HH:mm:ss")); // out : 2024-02-01 11:00:00
+
+    // sub
+    console.log("sub business time : ", dayjs("2024-01-20 10:00:00").subtractBusinessHours(3).format("YYYY-MM-DD HH:mm:ss")); // out : 2024-01-01 09:00:00
+
+    // template
+    console.dir(dayjs.getCurrentTemplate(), {depth:null, color: true});
+
+    /**
+     * @Result
+     {
+        businessTimes: {
+          monday: null,
+          tuesday: null,
+          wednesday: null,
+          thursday: null,
+          friday: null,
+          saturday: null,
+          sunday: null
+        },
+        holidays: [],
+        exceptions: {
+          '2024-01-01': [ { start: '08:00:00', end: '12:00:00' } ],     
+          '2024-02-01': [ { start: '08:00:00', end: '12:00:00' } ],     
+          '2024-03-01': [ { start: '08:00:00', end: '12:00:00' } ]      
+        }
+      }
+     */
+
+```

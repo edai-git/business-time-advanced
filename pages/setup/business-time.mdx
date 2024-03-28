@@ -24,7 +24,7 @@ dayjs.setBusinessTime(param1, param2);
 ### Default Working Hours
 
 #### Monday-Friday 9am - 5pm
-> By default, Business Times are Monday-Friday, 9am - 5pm, but you can setup as many Business Segments you want in a day. 
+> By default, Business Times are Monday-Friday, 9am - 5pm, but you can setup as many Business Segments you want in a day.     
 > (Jika tidak mengatur jam kerja, maka secara default akan menggunakan jam kerja senin-jumat 09:00-17:00)
 ````typescript copy
 // Create your Business Week definition
@@ -43,7 +43,7 @@ dayjs.setBusinessTime(businessTimes);
 ````
 
 #### Always Open
-> There is no closing time during the week. 
+> There is no closing time during the week.  
 > (24 jam sehari selama seminggu, tidak ada hari libur kecuali **exceptions** atau **holidays** sudah diatur)
 
 ````typescript copy
@@ -60,15 +60,20 @@ const businessTimes: BusinessHoursMap = {
 
 // Set Business Times in dayjs
 dayjs.setBusinessTime(businessTimes);
+
 ````
 
 #### Always Close
-> only applies when 'exception' has been set. 
+> only applies when 'exception' has been set.  
 > (berlaku ketika **exceptions** sudah diatur)
 
 ````typescript copy
 // Set Business Times in dayjs
 dayjs.setBusinessTime({});
+
+// get
+const businessTime = dayjs.getBusinessTime();
+console.dir(businessTime);
 
 /**
  * @Result :
@@ -89,7 +94,7 @@ dayjs.setBusinessTime({});
 ### Customized Working Hours 
 
 #### Weekend template 
->only specified working hours. 
+>only specified working hours.  
 >(cuma kerja dihari sabtu dan minggu jam 08:00-18:00)
 
 ````typescript
@@ -99,7 +104,12 @@ const businessTimes: BusinessHoursMap = {
   saturday: [{ start: '08:00:00', end: '13:00:00' }, { start: '12:00:00', end: '18:00:00' }, { start: '20:00:00', end: '24:00:00' }], // merge overlap
 }
 
+// set
 dayjs.setBusinessTime(businessTimes);
+
+// get
+const businessTime = dayjs.getBusinessTime();
+console.dir(businessTime);
 
 /**
  * @Result :
@@ -116,6 +126,9 @@ dayjs.setBusinessTime(businessTimes);
 ````
 
 #### type : add 
+> The 'add' parameter is used to add working hours to the previous working hours, and will only overwrite the corresponding working hours.  
+> (Parameter 'add' digunakan untuk menambah jam kerja ke jam kerja sebelumnya, dan hanya akan menimpa jam kerja yang sesuai)
+
 ``` typescript copy
 // default working hours
 const businessTimes: BusinessHoursMap = {
@@ -140,6 +153,10 @@ const newTemplate: BusinessHoursMap = {
 // set to working hour
 dayjs.setBusinessTime(newTemplate, 'add');
 
+// get
+const businessTime = dayjs.getBusinessTime();
+console.dir(businessTime);
+
 /**
  * @Result
  {
@@ -157,6 +174,9 @@ dayjs.setBusinessTime(newTemplate, 'add');
 
 
 #### type : replace
+> The 'replace' parameter is used to add working hours to the previous working hours, and will overwrite all previous working hours. If not set, it will be made 'null'  
+> (Parameter 'replace' digunakan untuk menambah jam kerja ke jam kerja sebelumnya, dan akan menimpa seluruh jam kerja sebelumnya. jika tidak diatur maka akan dibuat 'null')
+
 ``` typescript copy
 // default working hours
 const businessTimes: BusinessHoursMap = {
@@ -181,6 +201,9 @@ const newTemplate: BusinessHoursMap = {
 // set to working hour
 dayjs.setBusinessTime(newTemplate, 'replace');
 
+// get
+const businessTime = dayjs.getBusinessTime();
+console.dir(businessTime);
 /**
  * @Result
  {
@@ -194,4 +217,77 @@ dayjs.setBusinessTime(newTemplate, 'replace');
 }
  */
 
+```
+
+### Regulations
+#### Overlap
+> Overlapping working hours will be merged.  
+> (Jam kerja yang tumpang tindih akan digabungkan)
+
+| Before | After |
+| ------ | ----- |
+| `[{start: '08:00:00', end:'13:00:00'}, {start: '12:00:00', end:'18:00:00'}]` | `[ { start: '08:00:00', end: '18:00:00' } ]` |
+| `[{start: '08:00:00', end:'12:00:00'}, {start: '12:00:00', end:'18:00:00'}, { start: '19:00:00', end: '22:00:00' }]` | `[{ start: '08:00:00', end: '18:00:00' }, { start: '19:00:00', end: '22:00:00' }]` |
+
+#### Start > End
+> If the start time is greater than the end time, then those working hours will be ignored (removed).  
+> (Jika jam start lebih besar dari jam end, maka jam kerja tersebut akan diabaikan (dihilangkan))
+
+| Before | After |
+| ------ | ----- |
+| `[{start: '18:00:00', end:'13:00:00'}, {start: '12:00:00', end:'18:00:00'}]` | `[ { start: '12:00:00', end: '18:00:00' } ]` |
+| `[{start: '18:00:00', end:'12:00:00'}]` | `[]` |
+
+#### Greater than 24:00:00
+> If it's greater than 24:00:00, it will be changed to 24:00:00.  
+> (lebih besar dari jam 24, akan diubah ke jam 24)
+
+| Before | After |
+| ------ | ----- |
+| `[{start: '25:00:00', end:'28:00:00'}, {start: '20:00:00', end:'24:00:00'}]` | `[ { start: '20:00:00', end: '24:00:00' } ]` |
+| `[{start: '22:00:00', end:'25:30:00'}]` | `[ { start: '22:00:00', end: '24:00:00' } ]` |
+
+
+## Getting Business Times
+
+### Business Time
+``` typescript copy 
+    const businessTime = dayjs.getBusinessTime();
+
+    console.dir(businessTime);
+    /**
+     * @Result
+     {
+        monday: [ { start: '09:00:00', end: '17:00:00' } ],
+        tuesday: [ { start: '09:00:00', end: '17:00:00' } ],
+        wednesday: [ { start: '09:00:00', end: '17:00:00' } ],
+        thursday: [ { start: '09:00:00', end: '17:00:00' } ],
+        friday: [ { start: '09:00:00', end: '17:00:00' } ],
+        saturday: null,
+        sunday: null
+     }
+    */
+```
+### Template
+> Template (BusinessTime, Holidays, Exceptions)
+``` typescript copy
+    const template = dayjs.getCurrentTemplate();
+    
+    console.dir(template);
+    /**
+     * @Result
+     {
+        businessTimes: {
+            monday: [ { start: '09:00:00', end: '17:00:00' } ],
+            tuesday: [ { start: '09:00:00', end: '17:00:00' } ],
+            wednesday: [ { start: '09:00:00', end: '17:00:00' } ],
+            thursday: [ { start: '09:00:00', end: '17:00:00' } ],
+            friday: [ { start: '09:00:00', end: '17:00:00' } ],
+            saturday: null,
+            sunday: null
+        },
+        holidays: [],
+        exceptions: {}
+     }
+    */
 ```

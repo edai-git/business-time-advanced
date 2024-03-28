@@ -1,0 +1,29 @@
+### Get Next Business Day
+
+````typescript
+const nextBusinessDay = dayjs('2021-02-01').nextBusinessDay();
+
+console.log(nextBusinessDay); // 2021-02-02
+````
+
+### Get Last Business Day
+
+````typescript
+const lastBusinessDay = dayjs('2021-02-01').lastBusinessDay();
+
+console.log(nextBusinessDay); // 2021-01-29
+````
+
+### Get Next Business Time
+````typescript
+const nextBusinessTime = dayjs('2021-02-01 18:00:00').nextBusinessTime();
+
+console.log(nextBusinessTime); // 2021-02-02 09:00:00
+````
+
+### Get Last Business Time
+````typescript
+const lastBusinessTime = dayjs('2021-02-01 08:00:00').lastBusinessTime();
+
+console.log(lastBusinessTime); // 2021-01-29 17:00:00
+````

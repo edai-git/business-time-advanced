@@ -1,0 +1,66 @@
+### Subtract Business Time
+````typescript
+const day = dayjs('2021-02-01 10:00:00');
+const timeToSubtract: number = 2;
+
+// Possible BusinessTimeUnit is 'day', 'days', 'hour', 'hours', 'minute', 'minutes', 'seconds'
+const unit: BusinessTimeUnit = 'days';
+
+const newBusinessTime: Dayjs = day.subtractBusinessTime(timeToSubtract, unit);
+
+console.log(newBusinessTime); // 2021-01-28 10:00:00
+````
+
+### Subtract Business Days
+
+This method is just an alias for `.subtractBusinessTime(timeToSubtract, 'days')`
+
+````typescript
+const day = dayjs('2021-02-01 10:00:00');
+const timeToSubtract: number = 2;
+
+const newBusinessTime: Dayjs = day.subtractBusinessDays(timeToSubtract);
+
+console.log(newBusinessTime); // 2021-01-28 10:00:00
+````
+
+### Subtract Business Hours
+
+This method is just an alias for `.subtractBusinessTime(timeToSubtract, 'hours')`
+
+````typescript
+const day = dayjs('2021-02-01 12:00:00');
+const timeToSubtract: number = 2;
+
+const newBusinessTime: Dayjs = day.subtractBusinessHours(timeToSubtract);
+
+console.log(newBusinessTime); // 2021-02-01 10:00:00
+````
+
+### Subtract Business Minutes
+
+This method is just an alias for `.subtractBusinessTime(timeToSubtract, 'minutes')`
+
+````typescript
+const day = dayjs('2021-02-01 10:00:00');
+const timeToSubtract: number = 30;
+
+const newBusinessTime: Dayjs = day.subtractBusinessMinutes(timeToSubtract);
+
+console.log(newBusinessTime); // 2021-02-01 09:30:00
+````
+
+### Subtract Business Second
+
+This method is just an alias for `.subtractBusinessTime(timeToSubtract, 'seconds')`
+
+````typescript
+const day = dayjs('2021-02-01 10:00:00');
+const timeToSubtract: number = 256;
+
+const newBusinessTime: Dayjs = day.subtractBusinessSeconds(timeToSubtract);
+
+console.log(newBusinessTime); // 2021-02-01 09:55:44
+````
+
+### [Example Exceptions](setup/exception#example)

@@ -1,0 +1,66 @@
+### Business Time Diff
+````typescript
+const start: Dayjs = dayjs('2021-02-01 10:00:00');
+const end: Dayjs = dayjs('2021-02-04 10:00:00');
+
+// Possible BusinessTimeUnit is 'day', 'days', 'hour', 'hours', 'minute', 'minutes', 'seconds'
+const unit: BusinessTimeUnit = 'days';
+
+const difference: number = start.businessTimeDiff(end, unit);
+
+console.log(difference); // 3
+````
+
+### Business Days Diff
+
+This method is just an alias for `.businessTimeDiff(dateToCompare, 'days')`
+
+````typescript
+const start: Dayjs = dayjs('2021-02-01 10:00:00');
+const end: Dayjs = dayjs('2021-02-04 10:00:00');
+
+const difference: number = start.businessDaysDiff(end);
+
+console.log(difference); // 3
+````
+
+### Business Hours Diff
+
+This method is just an alias for `.businessTimeDiff(dateToCompare, 'hours')`
+
+````typescript
+const start: Dayjs = dayjs('2021-02-01 10:00:00');
+const end: Dayjs = dayjs('2021-02-01 15:00:00');
+
+const difference: number = start.businessHoursDiff(end);
+
+console.log(difference); // 5
+````
+
+### Business Minutes Diff
+
+This method is just an alias for `.businessTimeDiff(dateToCompare, 'minutes')`
+
+````typescript
+const start: Dayjs = dayjs('2021-02-01 10:00:00');
+const end: Dayjs = dayjs('2021-02-01 10:45:00');
+
+const difference: number = start.businessMinutesDiff(end);
+
+console.log(difference); // 25
+````
+
+### Business Seconds Diff
+
+This method is just an alias for `.businessTimeDiff(dateToCompare, 'seconds')`
+
+````typescript
+const start: Dayjs = dayjs('2021-02-01 10:00:00');
+const end: Dayjs = dayjs('2021-02-01 10:45:00');
+
+const difference: number = start.businessSecondsDiff(end);
+
+console.log(difference); // 1500
+````
+
+### [Example Exceptions](setup/exception#example)

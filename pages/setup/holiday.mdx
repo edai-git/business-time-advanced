@@ -1,1 +1,47 @@
-# hol
+# Holidays
+
+## Setting Holidays
+> By default, holidays are empty!
+
+````typescript copy
+// Create your holidays array as string array
+const holidays: string[] = [
+    '2024-01-01',
+    '2024-01-25',
+    '2024-01-03',
+];
+
+// Add holidays to dayjs
+dayjs.setHolidays(holidays);
+````
+
+
+## Getting Holidays
+### Get All Holidays
+> [Set a holiday date first](#setting-holidays)
+````typescript
+const holidays: string[] = dayjs.getHolidays();
+
+console.log(holidays);
+/**
+ * @Result
+ 
+ [ '2024-01-01', '2024-01-03', '2024-01-25' ]
+
+ */
+
+````
+### Get Holiday by date
+> [Set a holiday date first](#setting-holidays)
+````typescript
+const holidays : boolean = dayjs.getHolidayByDate('2024-01-25');
+
+console.log(holidays);
+/**
+ * @Result
+ 
+ true
+
+ */
+
+````

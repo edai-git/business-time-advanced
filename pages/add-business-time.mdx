@@ -1,0 +1,66 @@
+### Add Business Time
+````typescript
+const day = dayjs('2021-02-01 10:00:00');
+const timeToAdd: number = 2;
+
+// Possible BusinessTimeUnit is 'day', 'days', 'hour', 'hours', 'minute', 'minutes', 'seconds'
+const unit: BusinessTimeUnit = 'days';
+
+const newBusinessTime: Dayjs = day.addBusinessTime(timeToAdd, unit);
+
+console.log(newBusinessTime); // 2021-02-02 10:00:00
+````
+
+### Add Business Days
+
+This method is just an alias for `.addBusinessTime(timeToAdd, 'days')`
+
+````typescript
+const day = dayjs('2021-02-01 10:00:00');
+const timeToAdd: number = 2;
+
+const newBusinessTime: Dayjs = day.addBusinessDays(timeToAdd);
+
+console.log(newBusinessTime); // 2021-02-02 10:00:00
+````
+
+### Add Business Hours
+
+This method is just an alias for `.addBusinessTime(timeToAdd, 'hours')`
+
+````typescript
+const day = dayjs('2021-02-01 10:00:00');
+const timeToAdd: number = 2;
+
+const newBusinessTime: Dayjs = day.addBusinessHours(timeToAdd);
+
+console.log(newBusinessTime); // 2021-02-01 12:00:00
+````
+
+### Add Business Minutes
+
+This method is just an alias for `.addBusinessTime(timeToAdd, 'minutes')`
+
+````typescript
+const day = dayjs('2021-02-01 10:00:00');
+const timeToAdd: number = 30;
+
+const newBusinessTime: Dayjs = day.addBusinessMinutes(timeToAdd);
+
+console.log(newBusinessTime); // 2021-02-01 10:30:00
+````
+
+### Add Business Seconds
+
+This method is just an alias for `.addBusinessTime(timeToAdd, 'seconds')`
+
+````typescript
+const day = dayjs('2021-02-01 10:00:00');
+const timeToAdd: number = 256;
+
+const newBusinessTime: Dayjs = day.addBusinessSeconds(timeToAdd);
+
+console.log(newBusinessTime); // 2021-02-01 10:04:16
+````
+
+### [Example Exceptions](setup/exception#example)

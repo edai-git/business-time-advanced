@@ -2,7 +2,7 @@
   "index" : "Introduction",
   "setup" : "Setup",
   "checking" : "Checking",
-  "next-and-last" : "Next and Last",
+  "next-n-last" : "Next and Last",
   "add-business-time" : "Add Business Time",
   "sub-business-time" : "Sub Business Time",
   "diff-in-business-time" : "Diff in Business Time"  
