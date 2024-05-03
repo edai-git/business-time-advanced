@@ -7,7 +7,7 @@
 * **[See Regulation](business-time#regulations)**
 
 ````typescript copy
-// Create your holidays array as string array
+// Create your exception array as array of object
 const exceptions : BusinessTimeExceptions = {
     '2024-01-01' : [{start: '07:00:00', end:'06:00:00'}, {start: '08:00:00', end:'28:00:00'}],
     '2024-01-02' : [{start: '08:00:00', end:'25:00:00'}, {start: '06:00:00', end:'22:00:00'}],
@@ -21,7 +21,7 @@ const exceptions : BusinessTimeExceptions = {
 dayjs.setExceptions(exceptions)
 ````
 
-## Getting Holidays
+## Getting Exceptions
 ### Get All Exceptions
 > [Set a Exception date first](#setting-exceptions)
 ````typescript copy
